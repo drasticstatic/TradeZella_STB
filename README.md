@@ -8,6 +8,8 @@ Falls back to `.xlsx` if Google credentials are not yet configured.
 > timestamp, e.g. `trades_20260218124033.csv`. The script accepts any
 > `trades_*.csv` filename — no renaming needed before running it.
 
+<video src="Screen Recording 2026-02-18 at 05.15.56.mov" controls width="600"></video>
+
 ---
 
 ## 📁 Files in This Package

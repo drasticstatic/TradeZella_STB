@@ -57,9 +57,9 @@ TEMPLATE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "STB_Im
 VALID_ENTRY_MODELS = {
     '3x entry', 'advanced structure entry', 'breakers',
     'catching the move of the day', 'catching the move of the week',
-    'change of delivery', 'csid', 'displacement', 'fail flip', 'inversions',
+    'change of delivery', 'cisd', 'displacement', 'fail flip', 'inversions',
     'fcr', 'market structure shift', 'inverted fvg', 'mmem', 'ny fx entry',
-    'smm entry', 'other (specify)', 'time based entry model 2',
+    'smm entry', 'other (specify below)', 'time based entry model 2',
     'time based entry model 1'
 }
 
@@ -68,21 +68,30 @@ VALID_ENTRY_MODELS = {
 
 def get_entry_model(val):
     """
-    TradeZella exports Entry Model as a comma-separated string of selected values.
-    If a single valid option is found, use it. If multiple, use the first non-'other' match.
-    If none match or value is blank, return 'other (specify)'.
+    Returns (entry_model, other_specify) tuple.
+    - Single valid known model → (model, '-')
+    - Multiple models tagged → STB only accepts one; use first match,
+      put remainder in other_specify column for reference
+    - Full dropdown dump (all models present = nothing selected) → ('other (specify below)', '-')
+    - Blank → ('other (specify below)', '-')
+    Note: normalises legacy 'csid' typo to 'cisd' automatically.
     """
     if pd.isna(val) or str(val).strip() == '':
-        return 'other (specify)'
-    parts = [p.strip().lower() for p in str(val).split(',')]
-    # Prefer first specific match over 'other (specify)'
-    for part in parts:
-        if part in VALID_ENTRY_MODELS and part != 'other (specify)':
-            return part
-    # Single value that is exactly 'other (specify)'
-    if len(parts) == 1 and parts[0] == 'other (specify)':
-        return 'other (specify)'
-    return 'other (specify)'
+        return 'other (specify below)', '-'
+    # Normalise legacy typo from older TradeZella exports
+    normalised = str(val).replace('csid', 'cisd')
+    parts = [p.strip().lower() for p in normalised.split(',')]
+    matches = [p for p in parts if p in VALID_ENTRY_MODELS]
+    non_other = [m for m in matches if m != 'other (specify below)']
+    # Full dropdown dump — nothing was actually selected
+    all_valid_non_other = VALID_ENTRY_MODELS - {'other (specify below)'}
+    if set(non_other) >= all_valid_non_other:
+        return 'other (specify below)', '-'
+    if non_other:
+        # Use first match as the entry model; if multiple, note extras in other column
+        extra = ', '.join(non_other[1:]) if len(non_other) > 1 else '-'
+        return non_other[0], extra
+    return 'other (specify below)', '-'
 
 
 def get_outcome(row):
@@ -103,8 +112,15 @@ def get_outcome(row):
 
 
 def normalize_yesno(val):
-    """Convert various true/false representations to yes/no."""
+    """
+    Convert TradeZella yes/no fields to 'yes' or 'no'.
+    If both options are present (e.g. 'yes, no') it means TradeZella exported
+    the full dropdown — nothing was actually selected — so return blank.
+    """
     v = str(val).strip().lower()
+    # Both options present = full dropdown dump, not a real answer
+    if 'yes' in v and 'no' in v:
+        return ''
     if v in ('true', 'yes', '1', 'y'):
         return 'yes'
     if v in ('false', 'no', '0', 'n'):
@@ -128,36 +144,33 @@ def safe_date(val):
         return None
 
 
-def format_date_for_sheets(val):
-    """Format date as MM/DD/YYYY string for Google Sheets."""
+def format_date(val):
+    """Format date as YYYY-MM-DD string — accepted by both Google Sheets and xlsx."""
     d = safe_date(val)
-    return d.strftime('%m/%d/%Y') if d else ''
+    return d.strftime('%Y-%m-%d') if d else ''
 
 
 # ─── Row Mapper ───────────────────────────────────────────────────────────────
 
-def map_row(row, for_sheets=False):
+def map_row(row):
     """Map a single TradeZella row dict to an ordered list of STB column values."""
-    trade_date = (
-        format_date_for_sheets(row.get('Open Date'))
-        if for_sheets
-        else safe_date(row.get('Open Date'))
-    )
+    entry_model, other_specify = get_entry_model(row.get('Entry Model'))
     return [
-        trade_date,                                                    # Trading Date
-        get_entry_model(row.get('Entry Model')),                       # Entry Model
-        'USD',                                                         # Currency
-        row.get('Net P&L', 0),                                         # Profit / Loss
-        get_outcome(row),                                              # Outcome
-        safe_str(row.get('Emotions')),                                 # Emotions
-        normalize_yesno(row.get('Did Emotions Affect Decisions?')),    # Did emotions affect decisions?
-        normalize_yesno(row.get('Was Emotionally Stable?')),           # Was emotionally stable?
-        safe_str(row.get('Profit Target   Did You Respect It?')),      # Profit target - did you respect it?
-        safe_str(row.get('Stop Loss   Did You Respect It?')),          # Stop loss - did you respect it?
-        safe_str(row.get('Entry Logic Explanation')),                  # Entry logic explanation
-        safe_str(row.get('How Did The Trade Play Out?')),              # How did the trade play out?
-        safe_str(row.get('Notes For Coaches')),                        # Notes for coaches
-        '',                                                            # Screenshot URLs
+        format_date(row.get('Open Date')),                             # A: Trading Date
+        entry_model,                                                   # B: Entry Model
+        other_specify,                                                 # C: <--Other (Specify)
+        'USD',                                                         # D: Currency
+        row.get('Net P&L', 0),                                         # E: Profit / Loss
+        get_outcome(row),                                              # F: Outcome
+        safe_str(row.get('Emotions')),                                 # G: Emotions
+        normalize_yesno(row.get('Did Emotions Affect Decisions?')),    # H: Did emotions affect decisions?
+        normalize_yesno(row.get('Was Emotionally Stable?')),           # I: Was emotionally stable?
+        safe_str(row.get('Profit Target   Did You Respect It?')),      # J: Profit target
+        safe_str(row.get('Stop Loss   Did You Respect It?')),          # K: Stop loss
+        safe_str(row.get('Entry Logic Explanation')),                  # L: Entry logic explanation
+        safe_str(row.get('How Did The Trade Play Out?')),              # M: How did trade play out?
+        safe_str(row.get('Notes For Coaches')),                        # N: Notes for coaches
+        '',                                                            # O: Screenshot URLs
     ]
 
 
@@ -189,7 +202,7 @@ def write_to_sheets(df, spreadsheet_id, service_account_file, tab_name):
     data_rows = max(0, len(existing) - 1)
     print(f"   Sheet currently has {data_rows} data row(s). Appending from row {next_row}.")
 
-    rows = [map_row(row, for_sheets=True) for _, row in df.iterrows()]
+    rows = [map_row(row) for _, row in df.iterrows()]
 
     if rows:
         start_cell = f"A{next_row}"
@@ -215,7 +228,7 @@ def write_to_xlsx(df, template_path, output_path):
 
     print(f"🔄 Writing {len(df)} rows...")
     for i, (_, row) in enumerate(df.iterrows(), start=2):
-        for col_idx, value in enumerate(map_row(row, for_sheets=False), start=1):
+        for col_idx, value in enumerate(map_row(row), start=1):
             ws.cell(row=i, column=col_idx).value = value
 
     wb.save(output_path)
@@ -249,8 +262,11 @@ def main():
     # ── Load + filter CSV ─────────────────────────────────────────────────────
     print(f"📂 Reading: {os.path.basename(args.csv)}")
     df = pd.read_csv(args.csv)
-    # Drop any metadata/footer rows that have no Open Date (TradeZella sometimes appends these)
+    # Drop any metadata/footer rows that have no Open Date
     df = df[pd.notna(df['Open Date']) & (df['Open Date'].astype(str).str.strip() != '')]
+    # Sort chronologically by trade open date
+    df['Open Date'] = pd.to_datetime(df['Open Date'])
+    df = df.sort_values('Open Date').reset_index(drop=True)
     print(f"   {len(df)} valid trade rows found")
 
     # ── Resolve credentials ───────────────────────────────────────────────────
