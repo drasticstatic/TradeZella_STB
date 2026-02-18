@@ -8,15 +8,12 @@ Falls back to `.xlsx` if Google credentials are not yet configured.
 > timestamp, e.g. `trades_20260218124033.csv`. The script accepts any
 > `trades_*.csv` filename — no renaming needed before running it.
 
-Watch the Demo Video:
+Watch the Demo Video: [View on YouTube](https://youtu.be/3Cjl0XHMwXM)
 <video src="Screen Recording 2026-02-18 at 05.15.56.mov" controls width="600"></video>
 
-Note: GitHub's web preview restricts "raw" local video links for security and performance reasons, whereas VS Code allows them because it runs in a local environment.
-To view the demo, please click the link below to download/open the video file directly, or view it in a Markdown-capable editor like VS Code.
-[Watch the Screen Recording](https://github.com/drasticstatic/TradeZella_STB/blob/main/Screen%20Recording%202026-02-18%20at%2005.15.56.mov)
-
-OR
-[View on YouTube](https://youtu.be/3Cjl0XHMwXM)
+[or Download the Screen Recording here](https://github.com/drasticstatic/TradeZella_STB/blob/main/Screen%20Recording%202026-02-18%20at%2005.15.56.mov)
+Note: GitHub's web preview restricts "raw" embedded local video for security and performance reasons, whereas VS Code allows them because it runs in a local environment.
+To view the demo, please click the links to download/open the video file directly, or view this readme in a Markdown-capable editor like VS Code.
 
 ---
 
