@@ -50,6 +50,7 @@ ignition/deployments/chain-31337
 # Google Cloud API
 /credentials.json
 tradezella-stb-adf083c6c5f5.json
+service_account.json
 
 # Personal Imports
 STB_Import_Merged_*

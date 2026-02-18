@@ -44,7 +44,7 @@ from datetime import datetime
 # Update these two values after completing Google Cloud setup (see README).
 # You can also pass them as command-line flags instead.
 
-SPREADSHEET_ID       = "1h3KhHo2Lgyc8wqA_jeAsbC-7d4Sd6oP2w11HQoXBsY4"
+SPREADSHEET_ID       = "YOUR_SPREADSHEET_ID_HERE"
 SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "service_account.json")
 SHEET_TAB_NAME       = "Sheet1"   # The tab name inside your Google Sheet
 
