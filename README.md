@@ -146,6 +146,9 @@ python -m pip install pandas openpyxl gspread google-auth
 
 This lets the script push trades directly into your live Google Sheet.
 
+Google Sheet Template:
+https://docs.google.com/spreadsheets/d/1SonfR5bUHj_xXqJpSQ6ajpkSi2lV0zdP5z7GBEbyMzs/edit?usp=sharing
+
 ### Step 1 — Create a Google Cloud Project
 
 1. Go to [console.cloud.google.com](https://console.cloud.google.com/)
