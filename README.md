@@ -10,9 +10,13 @@ Falls back to `.xlsx` if Google credentials are not yet configured.
 
 Watch the Demo Video:
 <video src="Screen Recording 2026-02-18 at 05.15.56.mov" controls width="600"></video>
-Note: GitHub's web preview restricts "raw" local video links for security and performance reasons, whereas VS Code allows them because it runs in a local environment.
-To view the demo, please click the link below to open the video file directly, or view it in a Markdown-capable editor like VS Code.
 
+Note: GitHub's web preview restricts "raw" local video links for security and performance reasons, whereas VS Code allows them because it runs in a local environment.
+To view the demo, please click the link below to download/open the video file directly, or view it in a Markdown-capable editor like VS Code.
+[Watch the Screen Recording](https://github.com/drasticstatic/TradeZella_STB/blob/main/Screen%20Recording%202026-02-18%20at%2005.15.56.mov)
+
+OR
+[View on YouTube](https://youtu.be/3Cjl0XHMwXM)
 
 ---
 
