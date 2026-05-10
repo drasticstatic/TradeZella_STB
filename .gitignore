@@ -59,3 +59,8 @@ STB_Import_Merged_????????.xlsx
 
 #Automater App
 /Tradezella to STB.app
+
+# Graphify — local-only outputs (graph.json, GRAPH_REPORT.md, graph.html are committed)
+graphify-out/manifest.json
+graphify-out/cost.json
+graphify-out/cache/
