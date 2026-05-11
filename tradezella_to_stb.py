@@ -206,7 +206,7 @@ def write_to_sheets(df, spreadsheet_id, service_account_file, tab_name):
 
     if rows:
         start_cell = f"A{next_row}"
-        sheet.update(start_cell, rows, value_input_option='USER_ENTERED')
+        sheet.update(range_name=start_cell, values=rows, value_input_option='USER_ENTERED')
         print(f"✅ {len(rows)} trades appended → tab '{tab_name}'")
     else:
         print("⚠️  No rows to write.")
