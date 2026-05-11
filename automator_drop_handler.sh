@@ -18,7 +18,7 @@
 # ═════════════════════════════════════════════════════════════════════════════
 
 # ── Config: update these paths if you move the folder ─────────────────────────
-SCRIPT_DIR="$HOME/TradeZella_STB"
+SCRIPT_DIR="$HOME/code/TradeZella_STB"
 SCRIPT_PATH="$SCRIPT_DIR/tradezella_to_stb.py"
 # ──────────────────────────────────────────────────────────────────────────────
 
