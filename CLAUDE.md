@@ -64,3 +64,9 @@ When skills, specs, or task files exist for a topic — follow the logic there, 
 - **Agent handoffs:** `AGENT-SYNC/` (hub: `~/code/trading-assistant/`) — see `AGENT_SYNC.md` for current state
 - **Memory:** `~/.claude/projects/.../memory/MEMORY.md` — auto-loaded; detail in topic files
 - **TradeZella pipeline details:** `~/code/trading-assistant/` memory file `project_tradezella_stb.md`
+
+---
+
+## Commit Convention
+
+Footer: `Co-Authored-By: Alfred · Claude · [model] <noreply@anthropic.com>`
