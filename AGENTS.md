@@ -41,6 +41,12 @@ the commit-attribution hook stays inert until this clone is pointed at `.githook
 **Visibility:** PRIVATE
 **Primary builder:** Auggie (Augment CLI)
 
+**⚠ No `AGENT-SYNC/` or `AGENT-SYNC_PUBLIC/` here, intentionally — do not re-add either.**
+Christopher's explicit call: this repo doesn't need a coordination lane. A fleet-wide "complete
+the AGENT-SYNC structure" pass re-added an `AGENT-SYNC_PUBLIC/` here on 2026-09-13/14 without
+knowing about this decision — removed 2026-09-14. If you're running a fleet-wide completeness
+sweep, skip this repo.
+
 ---
 
 ## Tech Stack
