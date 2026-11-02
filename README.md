@@ -1,4 +1,22 @@
+<!-- readme-standard: 2026-11-02 -->
+<div align="center">
+
+<img src="assets/banner.svg" width="100%" alt="TradeZella to SmartTraderAI: a short road of three stops, export, convert, import.">
+
 # TradeZella → SmartTraderAI (STB) Import Tool
+
+![Status](https://img.shields.io/badge/Status-working_tool-d9a441?style=flat-square)
+![For](https://img.shields.io/badge/For-Traders_using_both_tools-64748b?style=flat-square)
+
+<img src="assets/icons/map-pin.svg" width="16" height="16" alt=""> **You are here:** drasticstatic lab › `TradeZella_STB` · public · `main` is the working branch
+
+</div>
+
+## <img src="assets/icons/compass.svg" width="24" height="24" alt=""> TL;DR
+
+1. <img src="assets/icons/sprout.svg" width="16" height="16" alt=""> **What this is.** A Python script that converts a TradeZella CSV export into the STB Bulk Import format, writing straight to your Google Sheet (or `.xlsx` if credentials are not set up).
+2. <img src="assets/icons/users-round.svg" width="16" height="16" alt=""> **Who it is for.** Traders on Mac or Windows who use TradeZella and SmartTraderAI.
+3. <img src="assets/icons/footprints.svg" width="16" height="16" alt=""> **Do this first.** Follow [Step 0](#-step-0--create-your-working-folder), or [watch the demo](https://youtu.be/3Cjl0XHMwXM).
 
 Automates converting a TradeZella CSV export into the STB Bulk Import format.
 **Default behavior: writes directly to your Google Sheet.**
@@ -338,3 +356,9 @@ python3 tradezella_to_stb.py ~/Downloads/trades_20260218124033.csv
 | Python not found on Mac | Install from [python.org](https://python.org) or `brew install python3` |
 | Template not found | Confirm `STB_Import_Template.xlsx` is in the same folder as the script |
 # TradeZella_STB
+
+## <img src="assets/icons/git-pull-request.svg" width="24" height="24" alt=""> Suggest a change
+
+Noticed something? Open an [issue](../../issues) or a pull request against `main`; Christopher reads them and a person with the role merges. Not on GitHub? Reach Christopher through [his contact page](https://drasticstatic.github.io/resume/pages/contact.html).
+
+<sub>The front door follows the living [README standard](https://github.com/drasticstatic/my-template/blob/main/README-STANDARD.md). Copy it, improve it.</sub>
