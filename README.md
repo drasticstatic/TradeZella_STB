@@ -5,7 +5,7 @@
 
 # TradeZella → SmartTraderAI (STB) Import Tool
 
-![Status](https://img.shields.io/badge/Status-working_tool-d9a441?style=flat-square)
+![Status](https://img.shields.io/badge/Status-working_tool-800020?style=flat-square)
 ![For](https://img.shields.io/badge/For-Traders_using_both_tools-64748b?style=flat-square)
 
 <img src="assets/icons/map-pin.svg" width="16" height="16" alt=""> **You are here:** drasticstatic lab › `TradeZella_STB` · public · `main` is the working branch
